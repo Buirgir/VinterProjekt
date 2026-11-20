@@ -15,7 +15,7 @@ class Player
         }
         set
         {
-            _hp = Math.Max(value, 0);
+            _hp = Math.Clamp(value, 0, maxHp);
         }
     }
     public int Mp
@@ -26,11 +26,21 @@ class Player
         }
         set
         {
-            _mp = Math.Max(value, 0);
+            _mp = Math.Clamp(value, 0, maxMp);
         }
     }
     public int getDefeatedEnemies()
     {
         return defeatedEnemies;
+    }
+
+    public void IncreseDefeatedEnemies()
+    {
+        defeatedEnemies++;
+    }
+    public void RoundStart()
+    {
+        Mp = maxMp;
+        Hp = maxHp;
     }
 }

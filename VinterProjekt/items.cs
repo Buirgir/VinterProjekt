@@ -2,8 +2,9 @@ using System.Linq.Expressions;
 
 class Item
 {
-    string _name;
-    int rarity;
+    protected string _name = "Null";
+    protected string rarity = "Null";
+    protected float rarityMulti = 1;
 
     public string Name
     {
@@ -11,16 +12,34 @@ class Item
         {
             return _name;
         }
-        set
+    }
+    public void RarityGen()
+    {
+        int rarityInt = Random.Shared.Next(1, 100);
+        if(rarityInt <= 60)
         {
-            if(value != null)
-            {
-                _name = value;
-            }
-            else
-            {
-                _name = "NoName";
-            }
+            rarity = "Common";
+            rarityMulti = 1;
+        }
+        else if(rarityInt >60 && rarityInt <= 80)
+        {
+            rarity = "Rare";
+            rarityMulti = 1.2f;
+        }
+        else if(rarityInt > 80 && rarityInt <= 95)
+        {
+            rarity = "Epic";
+            rarityMulti = 1.5f;
+        }
+        else if(rarityInt > 95)
+        {
+            rarity = "Epic";
+            rarityMulti = 3;
+        }
+        else
+        {
+            rarity = "Common";
+            rarityMulti = 1;
         }
     }
 }
@@ -35,22 +54,28 @@ class Weapon : Item
         string[] possibleNames = ["Axe", "Sword", "Greatsword", "Greataxe", "Gun", "Rifle"];
         string[] possibleElements = ["Electric", "Flaming", "Frozen", "Normal", "Earth"];
         element = possibleElements[Random.Shared.Next(possibleElements.Length)];
-        Name = possibleNames[Random.Shared.Next(possibleNames.Length)] + element;
-        int baseDamage = Random.Shared.Next(5, 20);
+        RarityGen();
+        _name = rarity + element + possibleNames[Random.Shared.Next(possibleNames.Length)];
+        baseDamage = Convert.ToInt32(Random.Shared.Next(5, 20) * rarityMulti);
     }    
 }
 
 class Armour : Item
 {
-    int baseDamage;
-    string element;
+    int defence;
+    int attackboost;
+    int manaBoost;
 
-    public void generateWeapon()
+    public void generateArmour()
     {
-        string[] possibleNames = ["Warrior's chestplate", "", "Mage's robe", "", "Gun", "Rifle"];
+        string[] possibleNames = ["Warrior's chestplate", "Iron chestplate", "Mage's robe"];
         string[] possibleElements = ["Electric", "Flaming", "Frozen", "Normal", "Earth"];
-        Name = possibleNames[Random.Shared.Next(possibleNames.Length)];
-        element = possibleElements[Random.Shared.Next(possibleElements.Length)];
-        int baseDamage = Random.Shared.Next(5, 20);
+        RarityGen();
+
+        _name = rarity + possibleNames[Random.Shared.Next(possibleNames.Length)];
+        defence = Convert.ToInt32(Random.Shared.Next(7) * rarityMulti);
+        attackboost = Convert.ToInt32(Random.Shared.Next(5) * rarityMulti);
+        manaBoost = Convert.ToInt32(Random.Shared.Next(80) * rarityMulti);
+
     }    
 }
