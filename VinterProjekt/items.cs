@@ -46,25 +46,62 @@ class Item
 
 class Weapon : Item
 {
-    int baseDamage;
-    string element;
+    int _baseDamage;
+    string _element;
+
+    public int BaseDamage
+    {
+        get
+        {
+            return _baseDamage;
+        }
+    }
+    public string Element
+    {
+        get
+        {
+            return _element;
+        }
+    }
 
     public void generateWeapon()
     {
         string[] possibleNames = ["Axe", "Sword", "Greatsword", "Greataxe", "Gun", "Rifle"];
         string[] possibleElements = ["Electric", "Flaming", "Frozen", "Normal", "Earth"];
-        element = possibleElements[Random.Shared.Next(possibleElements.Length)];
+        _element = possibleElements[Random.Shared.Next(possibleElements.Length)];
         RarityGen();
-        _name = rarity + element + possibleNames[Random.Shared.Next(possibleNames.Length)];
-        baseDamage = Convert.ToInt32(Random.Shared.Next(5, 20) * rarityMulti);
+        _name = rarity + _element + possibleNames[Random.Shared.Next(possibleNames.Length)];
+        _baseDamage = Convert.ToInt32(Random.Shared.Next(5, 20) * rarityMulti);
     }    
 }
 
 class Armour : Item
 {
-    int defence;
-    int attackboost;
-    int manaBoost;
+    int _defence;
+    int _attackboost;
+    int _manaBoost;
+
+    public int Defence
+    {
+        get
+        {
+            return _defence;
+        }
+    }
+    public int AttackBoost
+    {
+        get
+        {
+            return _attackboost;
+        }
+    }
+    public int ManaBoost
+    {
+        get
+        {
+            return _manaBoost;
+        }
+    }
 
     public void generateArmour()
     {
@@ -73,9 +110,9 @@ class Armour : Item
         RarityGen();
 
         _name = rarity + possibleNames[Random.Shared.Next(possibleNames.Length)];
-        defence = Convert.ToInt32(Random.Shared.Next(7) * rarityMulti);
-        attackboost = Convert.ToInt32(Random.Shared.Next(5) * rarityMulti);
-        manaBoost = Convert.ToInt32(Random.Shared.Next(80) * rarityMulti);
+        _defence = Convert.ToInt32(Random.Shared.Next(7) * rarityMulti);
+        _attackboost = Convert.ToInt32(Random.Shared.Next(5) * rarityMulti);
+        _manaBoost = Convert.ToInt32(Random.Shared.Next(80) * rarityMulti);
 
     }    
 }
